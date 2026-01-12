@@ -47,11 +47,15 @@ function render() {
   });
 }
 
+<script>
 function logout() {
-  localStorage.removeItem("loggedIn");
-  window.location.href = "login.html";
+  sessionStorage.clear();
+  window.location.replace("login.html");
+  render();
 }
-render();
+</script>
+
+
 </script>
 </body>
 </html>

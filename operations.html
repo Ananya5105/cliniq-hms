@@ -13,14 +13,20 @@
 
   <!-- Dark Theme -->
   <link rel="stylesheet" href="dark-theme.css">
+
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 </head>
 
 <body>
 <script>
-if (localStorage.getItem("loggedIn") !== "true") {
-  window.location.href = "login.html";
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.replace("login.html");
 }
 </script>
+
 
 <div class="container my-5">
 
@@ -72,7 +78,7 @@ if (localStorage.getItem("loggedIn") !== "true") {
 </div>
 
 <script>
-let operations = JSON.parse(localStorage.getItem("operations")) || [];
+let operations = JSON.parse(sessionStorage.getItem("operations")) || [];
 
 function addOperation() {
   operations.push({
@@ -98,10 +104,13 @@ function render() {
   });
 }
 
+
 function logout() {
-  localStorage.removeItem("loggedIn");
-  window.location.href = "login.html";
+  localStorage.clear();  
+  sessionStorage.clear();
+  window.location.replace("login.html");
 }
+
 
 render();
 </script>

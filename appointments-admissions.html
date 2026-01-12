@@ -2,62 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Appointments & Admissions</title>
+  <title>clinIQ | Appointments</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="dark-theme.css">
-
 </head>
 
 <body>
 <script>
-  if (localStorage.getItem("loggedIn") !== "true") {
-    window.location.href = "login.html";
-  }
+if (localStorage.getItem("loggedIn") !== "true") {
+  window.location.href = "login.html";
+}
 </script>
 
-<div class="container my-4">
-
-  <div class="d-flex justify-content-between align-items-center mb-3">
+<div class="container my-5">
+  <div class="d-flex justify-content-between mb-4">
     <h3>Appointments & Admissions</h3>
     <button class="btn btn-outline-danger btn-sm" onclick="logout()">Logout</button>
   </div>
 
-  <input class="form-control mb-2" id="name" placeholder="Patient Name">
-  <select class="form-select mb-2" id="type">
-    <option>Appointment</option>
-    <option>Admitted</option>
-  </select>
-  <button class="btn btn-primary" onclick="add()">Add</button>
-
-  <ul class="list-group mt-3" id="list"></ul>
-
+  <div class="card p-4">
+    <input class="form-control mb-3" id="name" placeholder="Patient Name">
+    <select class="form-select mb-3" id="type">
+      <option>Appointment</option>
+      <option>Admitted</option>
+    </select>
+    <button class="btn btn-primary" onclick="add()">Add</button>
+    <ul class="list-group mt-4" id="list"></ul>
+  </div>
 </div>
 
 <script>
-  let entries = JSON.parse(localStorage.getItem("entries")) || [];
+let entries = JSON.parse(localStorage.getItem("entries")) || [];
 
-  function add() {
-    entries.push({ name: name.value, type: type.value });
-    localStorage.setItem("entries", JSON.stringify(entries));
-    render();
-  }
-
-  function render() {
-    list.innerHTML = "";
-    entries.forEach(e => {
-      list.innerHTML += `<li class="list-group-item">${e.name} (${e.type})</li>`;
-    });
-  }
-
-  function logout() {
-    localStorage.removeItem("loggedIn");
-    window.location.href = "login.html";
-  }
-
+function add() {
+  entries.push({ name: name.value, type: type.value });
+  localStorage.setItem("entries", JSON.stringify(entries));
   render();
-</script>
+}
 
+function render() {
+  list.innerHTML = "";
+  entries.forEach(e => {
+    list.innerHTML += `<li class="list-group-item">${e.name} (${e.type})</li>`;
+  });
+}
+
+function logout() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
+}
+render();
+</script>
 </body>
 </html>

@@ -1,9 +1,3 @@
-<script>
-if (!sessionStorage.getItem("loggedIn")) {
-  window.location.replace("login.html");
-}
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,11 +11,15 @@ if (!sessionStorage.getItem("loggedIn")) {
 </head>
 
 <body>
-
+<script>
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.replace("login.html");
+}
+</script>
 
 <div class="container my-5">
 
-  <div class="d-flex justify-content-between align-items-center mb-5">
+  <div class="d-flex justify-content-between mb-5">
     <h2>Patient Analytics Dashboard</h2>
     <button class="btn btn-outline-danger btn-sm" onclick="logout()">Logout</button>
   </div>
@@ -32,7 +30,7 @@ if (!sessionStorage.getItem("loggedIn")) {
       <a href="basic-medical-info.html" class="text-decoration-none">
         <div class="card p-4 text-center">
           <h4>Basic Medical Info</h4>
-          <p class="text-secondary mt-2">Vitals, conditions & allergies</p>
+          <p class="text-secondary mt-2">Vitals & conditions</p>
         </div>
       </a>
     </div>
@@ -41,7 +39,7 @@ if (!sessionStorage.getItem("loggedIn")) {
       <a href="clinical-timeline.html" class="text-decoration-none">
         <div class="card p-4 text-center">
           <h4>Clinical Timeline</h4>
-          <p class="text-secondary mt-2">Visits, diagnoses & history</p>
+          <p class="text-secondary mt-2">Visits & diagnosis</p>
         </div>
       </a>
     </div>
@@ -49,21 +47,20 @@ if (!sessionStorage.getItem("loggedIn")) {
     <div class="col-md-4">
       <a href="appointments-admissions.html" class="text-decoration-none">
         <div class="card p-4 text-center">
-          <h4>Appointments & Admissions</h4>
-          <p class="text-secondary mt-2">Scheduling & patient status</p>
+          <h4>Appointments</h4>
+          <p class="text-secondary mt-2">Admissions & schedule</p>
         </div>
       </a>
     </div>
 
     <div class="col-md-4">
-  <a href="operations.html" class="text-decoration-none">
-    <div class="card p-4 text-center">
-      <h4>Operations</h4>
-      <p class="text-secondary mt-2">Scheduled, ongoing & completed</p>
+      <a href="operations.html" class="text-decoration-none">
+        <div class="card p-4 text-center">
+          <h4>Operations</h4>
+          <p class="text-secondary mt-2">OT workflow</p>
+        </div>
+      </a>
     </div>
-  </a>
-</div>
-
 
   </div>
 </div>
@@ -74,6 +71,5 @@ function logout() {
   window.location.replace("login.html");
 }
 </script>
-
 </body>
 </html>

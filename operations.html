@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>clinIQ | Operations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Dark Theme -->
+  <link rel="stylesheet" href="dark-theme.css">
+</head>
+
+<body>
+<script>
+if (localStorage.getItem("loggedIn") !== "true") {
+  window.location.href = "login.html";
+}
+</script>
+
+<div class="container my-5">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3>Operations Management</h3>
+    <button class="btn btn-outline-danger btn-sm" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- ADD OPERATION -->
+  <div class="card p-4 mb-5">
+    <h5 class="mb-3">Add Operation</h5>
+
+    <input class="form-control mb-3" id="patient" placeholder="Patient Name">
+    <input class="form-control mb-3" id="procedure" placeholder="Procedure">
+    <select class="form-select mb-3" id="status">
+      <option>Scheduled</option>
+      <option>Ongoing</option>
+      <option>Completed</option>
+    </select>
+
+    <button class="btn btn-primary" onclick="addOperation()">Add Operation</button>
+  </div>
+
+  <!-- OPERATIONS LIST -->
+  <div class="row g-4">
+
+    <div class="col-md-4">
+      <div class="card p-4">
+        <h5 class="text-center mb-3">Scheduled</h5>
+        <ul class="list-group" id="scheduled"></ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-4">
+        <h5 class="text-center mb-3">Ongoing</h5>
+        <ul class="list-group" id="ongoing"></ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-4">
+        <h5 class="text-center mb-3">Completed</h5>
+        <ul class="list-group" id="completed"></ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let operations = JSON.parse(localStorage.getItem("operations")) || [];
+
+function addOperation() {
+  operations.push({
+    patient: patient.value,
+    procedure: procedure.value,
+    status: status.value
+  });
+  localStorage.setItem("operations", JSON.stringify(operations));
+  render();
+}
+
+function render() {
+  scheduled.innerHTML = "";
+  ongoing.innerHTML = "";
+  completed.innerHTML = "";
+
+  operations.forEach(op => {
+    const li = `<li class="list-group-item">${op.patient}<br><small class="text-secondary">${op.procedure}</small></li>`;
+
+    if (op.status === "Scheduled") scheduled.innerHTML += li;
+    if (op.status === "Ongoing") ongoing.innerHTML += li;
+    if (op.status === "Completed") completed.innerHTML += li;
+  });
+}
+
+function logout() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
+}
+
+render();
+</script>
+
+</body>
+</html>

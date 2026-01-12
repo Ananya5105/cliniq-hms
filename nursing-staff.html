@@ -48,7 +48,9 @@ if (!sessionStorage.getItem("loggedIn")) {
 </div>
 
 <script>
-let nurses = [];
+// Load saved nurses from sessionStorage if any
+let nurses = JSON.parse(sessionStorage.getItem("nurses")) || [];
+render();
 
 function addNurse() {
   nurses.push({
@@ -56,6 +58,10 @@ function addNurse() {
     shift: shift.value,
     status: status.value
   });
+
+  // Save updated array to sessionStorage
+  sessionStorage.setItem("nurses", JSON.stringify(nurses));
+
   render();
 }
 

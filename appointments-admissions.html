@@ -12,8 +12,8 @@
 
 <body>
 <script>
-if (localStorage.getItem("loggedIn") !== "true") {
-  window.location.href = "login.html";
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.replace("login.html");
 }
 </script>
 
@@ -35,11 +35,10 @@ if (localStorage.getItem("loggedIn") !== "true") {
 </div>
 
 <script>
-let entries = JSON.parse(localStorage.getItem("entries")) || [];
+let entries = [];
 
 function add() {
   entries.push({ name: name.value, type: type.value });
-  localStorage.setItem("entries", JSON.stringify(entries));
   render();
 }
 
@@ -51,10 +50,9 @@ function render() {
 }
 
 function logout() {
-  localStorage.removeItem("loggedIn");
-  window.location.href = "login.html";
+  sessionStorage.clear();
+  window.location.replace("login.html");
 }
-render();
 </script>
 </body>
 </html>

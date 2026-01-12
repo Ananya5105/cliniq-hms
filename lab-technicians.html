@@ -41,21 +41,66 @@ if (!sessionStorage.getItem("loggedIn")) {
   <div class="card p-4">
     <ul class="list-group" id="techList"></ul>
   </div>
+ 
+  <select class="form-select mb-3" id="technician">
+  <option>Select Technician</option>
+</select>
+
 </div>
 
 <script>
-let techs = [];
+let tests = [];
+let techs = JSON.parse(sessionStorage.getItem("labTechs")) || [];
 
-function addTech() {
+function populateTechs() {
+  techs.forEach(t => {
+    technician.innerHTML += `<option>${t.name}</option>`;
+  });
+}
+
+function addTest() {
+  tests.push({
+    patient: patient.value,
+    test: test.value,
+    status: status.value,
+    technician: technician.value
+  });
+  sessionStorage.setItem("labTests", JSON.stringify(tests));
+  render();
+}
+
+function render() {
+  list.innerHTML = "";
+  tests.forEach(t => {
+    list.innerHTML += `
+      <li class="list-group-item">
+        <strong>${t.patient}</strong><br>
+        <small>${t.test} • ${t.status}</small><br>
+        <small class="text-secondary">Tech: ${t.technician}</small>
+      </li>`;
+  });
+  
+}
+
+function logout() {
+  sessionStorage.clear();
+  window.location.replace("login.html");
+}
+  function addTech() {
   techs.push({
     name: techName.value,
     shift: shift.value,
     availability: availability.value
   });
-  render();
+
+  // Save updated techs array to sessionStorage
+  sessionStorage.setItem("labTechs", JSON.stringify(techs));
+
+  renderTechs();
+  populateTechs();
 }
 
-function render() {
+function renderTechs() {
   techList.innerHTML = "";
   techs.forEach(t => {
     techList.innerHTML += `
@@ -66,10 +111,9 @@ function render() {
   });
 }
 
-function logout() {
-  sessionStorage.clear();
-  window.location.replace("login.html");
-}
+
+populateTechs();
 </script>
+
 </body>
 </html>

@@ -31,6 +31,14 @@ if (!sessionStorage.getItem("loggedIn")) {
       <option>Ongoing</option>
       <option>Completed</option>
     </select>
+    <select class="form-select mb-3" id="doctor">
+  <option>Select Doctor</option>
+</select>
+
+<select class="form-select mb-3" id="nurse">
+  <option>Select Nurse</option>
+</select>
+
     <button class="btn btn-primary" onclick="add()">Add Operation</button>
   </div>
 
@@ -43,16 +51,38 @@ if (!sessionStorage.getItem("loggedIn")) {
 
 <script>
 let ops = [];
+let doctors = JSON.parse(sessionStorage.getItem("doctors")) || [];
+let nurses = JSON.parse(sessionStorage.getItem("nurses")) || [];
+
+function populateStaff() {
+  doctors.forEach(d => {
+    doctor.innerHTML += `<option>${d.name}</option>`;
+  });
+  nurses.forEach(n => {
+    nurse.innerHTML += `<option>${n.name}</option>`;
+  });
+}
 
 function add() {
-  ops.push({ patient: patient.value, procedure: procedure.value, status: status.value });
+  ops.push({
+    patient: patient.value,
+    procedure: procedure.value,
+    status: status.value,
+    doctor: doctor.value,
+    nurse: nurse.value
+  });
   render();
 }
 
 function render() {
   scheduled.innerHTML = ongoing.innerHTML = completed.innerHTML = "";
   ops.forEach(o => {
-    const li = `<li class="list-group-item">${o.patient}<br><small>${o.procedure}</small></li>`;
+    const li = `
+      <li class="list-group-item">
+        <strong>${o.patient}</strong><br>
+        <small>${o.procedure}</small><br>
+        <small class="text-secondary">Dr: ${o.doctor} | Nurse: ${o.nurse}</small>
+      </li>`;
     if (o.status === "Scheduled") scheduled.innerHTML += li;
     if (o.status === "Ongoing") ongoing.innerHTML += li;
     if (o.status === "Completed") completed.innerHTML += li;
@@ -63,6 +93,9 @@ function logout() {
   sessionStorage.clear();
   window.location.replace("login.html");
 }
+
+populateStaff();
 </script>
+
 </body>
 </html>

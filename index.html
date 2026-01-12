@@ -1,3 +1,9 @@
+<script>
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.replace("login.html");
+}
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +17,7 @@
 </head>
 
 <body>
-<script>
-if (localStorage.getItem("loggedIn") !== "true") {
-  window.location.href = "login.html";
-}
-</script>
+
 
 <div class="container my-5">
 
@@ -68,9 +70,10 @@ if (localStorage.getItem("loggedIn") !== "true") {
 
 <script>
 function logout() {
-  localStorage.removeItem("loggedIn");
-  window.location.href = "login.html";
+  sessionStorage.clear();
+  window.location.replace("login.html");
 }
 </script>
+
 </body>
 </html>

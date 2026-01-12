@@ -173,6 +173,13 @@ if (!sessionStorage.getItem("loggedIn")) {
     document.getElementById("output").innerText =
       JSON.stringify(patient, null, 2);
   }
+  <script>
+function logout() {
+  sessionStorage.clear();
+  window.location.replace("login.html");
+}
+</script>
+
 </script>
 
 </body>

@@ -90,3 +90,9 @@ pre {
   border-radius: 12px;
   border: 1px solid rgba(125, 211, 252, 0.25);
 }
+.section-title {
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+

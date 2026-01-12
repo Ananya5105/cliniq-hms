@@ -45,6 +45,10 @@ if (!sessionStorage.getItem("loggedIn")) {
 
 <script>
 let doctors = [];
+  // Load saved doctors if any
+let doctors = JSON.parse(sessionStorage.getItem("doctors")) || [];
+render();
+
 
 function addDoctor() {
   doctors.push({
@@ -52,8 +56,14 @@ function addDoctor() {
     speciality: speciality.value,
     availability: availability.value
   });
+
+  // Save to sessionStorage
+  sessionStorage.setItem("doctors", JSON.stringify(doctors));
+
   render();
 }
+
+ 
 
 function render() {
   doctorList.innerHTML = "";

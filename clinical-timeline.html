@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clinical Timeline</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<script>
+  if (localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "login.html";
+  }
+</script>
+
+<div class="container my-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Clinical Timeline</h3>
+    <button class="btn btn-outline-danger btn-sm" onclick="logout()">Logout</button>
+  </div>
+
+  <input type="date" id="date" class="form-control mb-2">
+  <input class="form-control mb-2" id="diagnosis" placeholder="Diagnosis">
+  <button class="btn btn-primary" onclick="add()">Add Visit</button>
+
+  <ul class="list-group mt-3" id="list"></ul>
+
+</div>
+
+<script>
+  let visits = JSON.parse(localStorage.getItem("visits")) || [];
+
+  function add() {
+    visits.push({ date: date.value, diagnosis: diagnosis.value });
+    localStorage.setItem("visits", JSON.stringify(visits));
+    render();
+  }
+
+  function render() {
+    list.innerHTML = "";
+    visits.forEach(v => {
+      list.innerHTML += `<li class="list-group-item">${v.date} - ${v.diagnosis}</li>`;
+    });
+  }
+
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    window.location.href = "login.html";
+  }
+
+  render();
+</script>
+
+</body>
+</html>

@@ -35,17 +35,43 @@ if (!sessionStorage.getItem("loggedIn")) {
   </div>
 </div>
 
+  <select class="form-select mb-3" id="linkedTest">
+  <option>Select Lab Test</option>
+</select>
+
+
 <script>
 let reports = [];
+let tests = JSON.parse(sessionStorage.getItem("labTests")) || [];
+
+function populateTests() {
+  tests.forEach(t => {
+    linkedTest.innerHTML += `<option>${t.patient} – ${t.test}</option>`;
+  });
+}
 
 function addReport() {
   reports.push({
     patient: patient.value,
     report: report.value,
-    date: date.value
+    date: date.value,
+    test: linkedTest.value
   });
   render();
 }
+
+  function addTest() {
+  tests.push({
+    patient: patientName.value,
+    test: testName.value
+  });
+
+  // Save updated array to sessionStorage
+  sessionStorage.setItem("labTests", JSON.stringify(tests));
+
+  populateTests();
+}
+
 
 function render() {
   reportList.innerHTML = "";
@@ -53,7 +79,8 @@ function render() {
     reportList.innerHTML += `
       <li class="list-group-item">
         <strong>${r.patient}</strong><br>
-        <small class="text-secondary">${r.report} • ${r.date}</small>
+        <small>${r.report} • ${r.date}</small><br>
+        <small class="text-secondary">Linked Test: ${r.test}</small>
       </li>`;
   });
 }
@@ -62,6 +89,9 @@ function logout() {
   sessionStorage.clear();
   window.location.replace("login.html");
 }
+
+populateTests();
 </script>
+
 </body>
 </html>

@@ -12,8 +12,8 @@
 
 <body>
 <script>
-if (localStorage.getItem("loggedIn") !== "true") {
-  window.location.href = "login.html";
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.replace("login.html");
 }
 </script>
 
@@ -32,30 +32,24 @@ if (localStorage.getItem("loggedIn") !== "true") {
 </div>
 
 <script>
-let visits = JSON.parse(localStorage.getItem("visits")) || [];
+let visits = [];
 
 function add() {
   visits.push({ date: date.value, diagnosis: diagnosis.value });
-  localStorage.setItem("visits", JSON.stringify(visits));
   render();
 }
 
 function render() {
   list.innerHTML = "";
   visits.forEach(v => {
-    list.innerHTML += `<li class="list-group-item">${v.date} — ${v.diagnosis}</li>`;
+    list.innerHTML += `<li class="list-group-item">${v.date} – ${v.diagnosis}</li>`;
   });
 }
 
-<script>
 function logout() {
   sessionStorage.clear();
   window.location.replace("login.html");
-  render();
 }
-</script>
-
-
 </script>
 </body>
 </html>

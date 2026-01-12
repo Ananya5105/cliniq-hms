@@ -12,8 +12,8 @@
 
 <body>
 <script>
-if (localStorage.getItem("loggedIn") !== "true") {
-  window.location.href = "login.html";
+if (!sessionStorage.getItem("loggedIn")) {
+  window.location.replace("login.html");
 }
 </script>
 
@@ -39,13 +39,12 @@ function save() {
     allergies: allergies.value,
     conditions: conditions.value
   };
-  localStorage.setItem("basicMedical", JSON.stringify(data));
   out.innerText = JSON.stringify(data, null, 2);
 }
 
 function logout() {
-  localStorage.removeItem("loggedIn");
-  window.location.href = "login.html";
+  sessionStorage.clear();
+  window.location.replace("login.html");
 }
 </script>
 </body>
